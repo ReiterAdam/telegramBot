@@ -5,6 +5,7 @@ import telebot
 import requests
 import formula1
 
+
 # import token and get bot
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -15,16 +16,19 @@ def send_welcome(message):
     bot.reply_to(message, "Hello there!")
 
     
-@bot.message_handler(commands=['drivers'])
+@bot.message_handler(commands=['f1drivers'])
 def list_drivers(message):
     bot.reply_to(message, formula1.getListOfDrivers())
 
     
-@bot.message_handler(commands=['schedule'])
+@bot.message_handler(commands=['f1schedule'])
 def display_schhedule(message):
     bot.reply_to(message, formula1.getSchedules())
    
-
+@bot.message_handler(commands=['help','h'])
+def display_schhedule(message):
+    listOfCommands = "/start, /hello - welcome message\n/f1drivers - list of current drivers\n/f1schedule - schedule for this year"
+    bot.reply_to(message, listOfCommands)
 # any message will be echoed to user
 # @bot.message_handler(func=lambda msg:True)
 # def echo_all(message):
