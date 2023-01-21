@@ -18,12 +18,18 @@ def send_welcome(message):
 @bot.message_handler(commands=['drivers'])
 def list_drivers(message):
     bot.reply_to(message, formula1.getListOfDrivers())
-    # print(response.text
+
     
+@bot.message_handler(commands=['schedule'])
+def display_schhedule(message):
+    bot.reply_to(message, formula1.getSchedules())
+   
 
 # any message will be echoed to user
 # @bot.message_handler(func=lambda msg:True)
 # def echo_all(message):
 #     bot.reply_to(message, message.text)
+
+
 # make it work
 bot.infinity_polling()
