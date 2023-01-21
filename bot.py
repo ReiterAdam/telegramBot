@@ -3,6 +3,7 @@ import telebot
 
 # for formula 1 api
 import requests
+import formula1
 
 # import token and get bot
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
@@ -16,13 +17,7 @@ def send_welcome(message):
     
 @bot.message_handler(commands=['drivers'])
 def list_drivers(message):
-    url = "http://ergast.com/api/f1/2022/drivers"
-    
-    payload={}
-    headers = {}
-    
-    response = requests.request("GET", url, headers=headers, data=payload)
-    bot.reply_to(message, response.text)
+    bot.reply_to(message, formula1.getListOfDrivers())
     # print(response.text
     
 
