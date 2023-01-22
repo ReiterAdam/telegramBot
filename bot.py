@@ -8,20 +8,21 @@ import formula1
 
 # for trains schedule
 import trains
-from telegram.ext import Updater
+import schedule
+import time
 
 
 
 # import token and get bot
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
-u = Updater(BOT_TOKEN, asyncio.Queue)
+
 bot = telebot.TeleBot(BOT_TOKEN)
 user_id = '5902568309'
 
 
-j = u.job_queue
 
-def scheduled_updates(context: telegram.ext.CallbackContext):
+
+def scheduled_updates():
     bot.send_message(user_id, trains.displayTrains())
 
 # add message handler to start and Hello command
@@ -46,18 +47,21 @@ def display_schhedule(message):
     
 @bot.message_handler(commands=['iliketrains'])
 def start_updates(message):
-    #sched.add_job(scheduled_updates, trigger="cron", hour = 1, id='scheduledUpdates')
-    #sched.add_job(scheduled_updates, 'interval', minutes = 1, id='scheduledUpdates')
-#    chat_id = message[-1].chat.id
-    job = j.run_repeating(scheduled_updates, interval=20, first=20)
-    bot.send_message(user_id, "Powiadomienia wlaczone")
-    bot.send_message(user_id, f'Aktualnie mamy:\n{trains.displayTrains()}')
+    
+    bot.reply_to(message, "Powiadomienia wlaczone")    
+    bot.reply_to(message, f'Aktualnie mamy:\n{trains.displayTrains()}')
+
+    schedule.every().day.at("6:00").do(scheduled_updates)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+ 
 
 @bot.message_handler(commands=['idontliketrains'])
 def stop_updates(message):
 #    sched.remove_job('scheduledUpdates')
-    bot.send_message(user_id, "Powiadomienia wylaczone")
-    
+    bot.reply_to(message, "Powiadomienia wylaczone")
+    schedule.clear()
 # any message will be echoed to user
 # @bot.message_handler(func=lambda msg:True)
 # def echo_all(message):

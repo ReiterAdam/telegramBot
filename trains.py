@@ -23,7 +23,7 @@ def getTrain():
     for train in data:
         if (train[3][:3] == 'Poz'): # we are looking only for poznan - zbaszynek
             res.append(train)
-    return data
+    return res
     
 def displayTrains():
     trains = getTrain()
