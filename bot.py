@@ -51,7 +51,7 @@ def start_updates(message):
     bot.reply_to(message, "Powiadomienia wlaczone")    
     bot.reply_to(message, f'Aktualnie mamy:\n{trains.displayTrains()}')
 
-    schedule.every().day.at("6:00").do(scheduled_updates)
+    schedule.every().day.at("06:00").do(scheduled_updates)
     while True:
         schedule.run_pending()
         time.sleep(1)
