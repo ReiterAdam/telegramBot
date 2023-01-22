@@ -20,7 +20,20 @@ def getTrain():
         cols = [ele.text.strip() for ele in cols]
         data.append([ele for ele in cols if ele]) #throw away empty values
     res = []
-    for pociag in data:
-        if (pociag[3][:3] == 'Poz'): # we are looking only for poznan - zbaszynek
-            res.append(pociag)
-    return res
+    for train in data:
+        if (train[3][:3] == 'Poz'): # we are looking only for poznan - zbaszynek
+            res.append(train)
+    return data
+    
+def displayTrains():
+    trains = getTrain()
+    
+    ans = ""
+    if len(trains) == 0:
+        ans = "Brak danych!"
+    else:
+        for row in trains:
+            ans += ' '.join(row[:2]) + ' ' + ' '.join(row[2:]) + '\n'
+        
+    
+    return ans
