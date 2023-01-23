@@ -11,7 +11,8 @@ import trains
 import schedule
 import time
 
-
+# for nasa thing
+import nasa
 
 # import token and get bot
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
@@ -41,8 +42,14 @@ def display_schhedule(message):
     bot.reply_to(message, formula1.getSchedules())
    
 @bot.message_handler(commands=['help','h'])
-def display_schhedule(message):
-    listOfCommands = "/start, /hello - welcome message\n/f1drivers - list of current drivers\n/f1schedule - schedule for this year"
+def display_help_info(message):
+    listOfCommands = """/start, /hello - welcome message
+/f1drivers - list of current drivers
+/f1schedule - schedule for this year
+/iliketrains - to display info about trains from poznan to zbaszynek, everyday at 6:00 am
+/idontliketrains - if you dont like trains anymore
+/nasaapod - get APOD directly form NASA"""
+    
     bot.reply_to(message, listOfCommands)
     
 @bot.message_handler(commands=['iliketrains'])
@@ -62,6 +69,15 @@ def stop_updates(message):
 #    sched.remove_job('scheduledUpdates')
     bot.reply_to(message, "Powiadomienia wylaczone")
     schedule.clear()
+
+
+@bot.message_handler(commands=['nasaapod'])
+def display_apod(message):
+    bot.reply_to(message, nasa.getAPOD()[1]) # get image
+    bot.reply_to(message, nasa.getAPOD()[0]) # get desc description
+
+
+
 # any message will be echoed to user
 # @bot.message_handler(func=lambda msg:True)
 # def echo_all(message):
