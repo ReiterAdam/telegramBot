@@ -24,9 +24,8 @@ def getListOfDrivers():
     
     return ans
     
-def getSchedules():
+def getSchedules(year="current"):
 
-    year = 2023
     url = F'http://ergast.com/api/f1/{year}'
 
     payload={}
